@@ -30,7 +30,7 @@ class Manager:
         self.orderStack: list[int] = []  # 注文されたアイスクリームのスタック
 
     def update(self):
-        pass
+        [i.update() for i in self.iceButtons_list]
 
     def draw(self):
         pyxel.cls(0)
