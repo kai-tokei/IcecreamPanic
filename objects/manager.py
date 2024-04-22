@@ -6,6 +6,7 @@ from components.button.cup_button import CupButton
 from components.button.ice_button import IceButton
 from components.cone import Cone
 from components.cup import Cup
+from components.speech_bubble import SpeechBubble
 
 # consts
 
@@ -26,9 +27,11 @@ class Manager:
         self.cupButton = CupButton(8, 146)
         self.coneButton = ConeButton(8, 167)
 
+        self.speech = SpeechBubble()
+
         self.capital: int = 100  # 資金($)
-        self.scoopStack: list[int] = []  # 今作っているアイスクリームのスタック
-        self.orderStack: list[int] = []  # 注文されたアイスクリームのスタック
+        self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
+        self.orderStack: list[any] = []  # 注文されたアイスクリームのスタック
 
     def update(self):
         [i.update() for i in self.iceButtons_list]
@@ -38,3 +41,4 @@ class Manager:
         self.cupButton.draw()
         self.coneButton.draw()
         [i.draw() for i in self.iceButtons_list]
+        self.speech.draw()
