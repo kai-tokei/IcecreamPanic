@@ -25,6 +25,10 @@ class Manager:
         self.cupButton = CupButton(8, 146)
         self.coneButton = ConeButton(8, 167)
 
+        self.capital: int = 100  # 資金($)
+        self.scoopStack: list[int] = []  # 今作っているアイスクリームのスタック
+        self.orderStack: list[int] = []  # 注文されたアイスクリームのスタック
+
     def update(self):
         pass
 

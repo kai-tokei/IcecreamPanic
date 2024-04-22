@@ -8,5 +8,8 @@ class IceButton(GameObject):
         self.height: int = 18
         self.col: int = col
 
+    def isClicked(self):
+        pass
+
     def draw(self):
         pyxel.rect(self.x, self.y, self.width, self.height, self.col)
