@@ -4,6 +4,7 @@ import pyxel
 from components.button.cone_button import ConeButton
 from components.button.cup_button import CupButton
 from components.button.ice_button import IceButton
+from components.cone import Cone
 
 # consts
 
@@ -25,6 +26,8 @@ class Manager:
         self.cupButton = CupButton(8, 146)
         self.coneButton = ConeButton(8, 167)
 
+        self.testCone = Cone()
+
         self.capital: int = 100  # 資金($)
         self.scoopStack: list[int] = []  # 今作っているアイスクリームのスタック
         self.orderStack: list[int] = []  # 注文されたアイスクリームのスタック
@@ -37,3 +40,4 @@ class Manager:
         self.cupButton.draw()
         self.coneButton.draw()
         [i.draw() for i in self.iceButtons_list]
+        self.testCone.draw()

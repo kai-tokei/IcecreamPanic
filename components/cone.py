@@ -3,11 +3,21 @@ import pyxel
 from objects.gameobject import GameObject
 
 class Cone(GameObject):
-    def __init__(self, x: float=75, y: float=122):
+    def __init__(self, x: float=40, y: float=80):
         super().__init__(x, y)
+        self.width = 32
+        self.height = 50
 
     def update(self):
         pass
 
     def draw(self):
-        pass
+        pyxel.tri(
+            self.x,
+            self.y,
+            self.x + self.width,
+            self.y,
+            self.x + self.width/2,
+            self.y + self.height,
+            col=9
+        )
