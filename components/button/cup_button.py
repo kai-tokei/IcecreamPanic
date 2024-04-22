@@ -5,7 +5,7 @@ class CupButton(GameObject):
     def __init__(self, x: float, y: float):
         super().__init__(x, y)
         self.width: int = 16
-        self.height: int = 18
+        self.height: int = 14
         self.col: int = 7
 
     def draw(self):
