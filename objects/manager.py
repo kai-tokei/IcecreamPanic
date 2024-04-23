@@ -7,6 +7,7 @@ from components.button.ice_button import IceButton
 from components.cone import Cone
 from components.cup import Cup
 from components.speech_bubble import SpeechBubble
+from components.serve import Serve
 
 # consts
 
@@ -28,6 +29,7 @@ class Manager:
         self.coneButton = ConeButton(8, 167)
 
         self.speech = SpeechBubble()
+        self.serve = Serve()
 
         self.capital: int = 100  # 資金($)
         self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
@@ -42,3 +44,4 @@ class Manager:
         self.coneButton.draw()
         [i.draw() for i in self.iceButtons_list]
         self.speech.draw()
+        self.serve.draw()
