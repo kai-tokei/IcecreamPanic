@@ -13,17 +13,12 @@ class IceButton(GameObject):
             self.y,
             width=self.width,
             height=self.height)
-        self.clicked = False
-
-    def calIsClicked(self):
-        return self.button.isClicked(
-            pyxel.MOUSE_POS_X, pyxel.MOUSE_POS_Y)
 
     def isClicked(self):
-        return self.clicked
+        return self.button.isClicked()
 
     def update(self):
-        self.calIsClicked()
+        self.isClicked()
 
     def draw(self):
         pyxel.rect(self.x, self.y, self.width, self.height, self.col)

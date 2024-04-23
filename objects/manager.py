@@ -37,6 +37,7 @@ class Manager:
 
     def update(self):
         [i.update() for i in self.iceButtons_list]
+        self.serve.update()
 
     def draw(self):
         pyxel.cls(0)

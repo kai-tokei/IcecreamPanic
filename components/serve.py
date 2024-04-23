@@ -8,10 +8,14 @@ class Serve(GameObject):
         self.x: int = x
         self.y: int = y
         self.r: int = 12
-        self.button: Button = Button(self.x, self.y, self.r, self.r)
+        self.col: int = 3
+        self.button: Button = Button(self.x - self.r, self.y - self.r, self.r*2, self.r*2)
 
     def update(self):
-        self.button.isClicked()
+        if self.button.isInside(pyxel.MOUSE_POS_X, pyxel.MOUSE_POS_Y):
+            self.col = 4
+        else:
+            self.col = 3
 
     def draw(self):
-        pyxel.circ(self.x, self.y, self.r, 3)
+        pyxel.circ(self.x, self.y, self.r, self.col)
