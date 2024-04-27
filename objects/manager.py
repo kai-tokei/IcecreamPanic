@@ -8,6 +8,7 @@ from components.cone import Cone
 from components.cup import Cup
 from components.speech_bubble import SpeechBubble
 from components.serve import Serve
+from components.ice import Ice
 
 # consts
 
@@ -43,8 +44,8 @@ class Manager:
 
     # スタックされたアイスを描画
     def drawScoopedIce(self):
-        for i in self.scoopStack:
-            pass
+        for i in range(len(self.scoopStack)):
+            Ice(50, 120-i*15, self.scoopStack[i]).draw()
 
     def update(self):
         self.scoopIce()
@@ -57,3 +58,4 @@ class Manager:
         [i.draw() for i in self.iceButtons_list]
         self.speech.draw()
         self.serve.draw()
+        self.drawScoopedIce()

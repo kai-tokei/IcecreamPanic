@@ -7,4 +7,4 @@ class Ice(GameObject):
         self.col = col
 
     def draw(self):
-        pyxel.circ(self.x, self.y, )
+        pyxel.circ(self.x, self.y, r=15, col=self.col)
