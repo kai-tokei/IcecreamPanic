@@ -70,7 +70,7 @@ class Manager:
         self.scoopIce()
         self.serve.update()
         self.addCupORCone()
-        self.order.update(self.scoopStack)
+        self.order.update(self.scoopStack, self.cupORcone)
 
     def draw(self):
         pyxel.cls(0)
