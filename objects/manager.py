@@ -26,13 +26,14 @@ class Manager:
             IceButton(69, 167, 14),
             IceButton(88, 167, 15),
         ]
-        self.cupButton = CupButton(8, 146)
-        self.coneButton = ConeButton(8, 167)
+        self.cupButton: CupButton = CupButton(8, 146)
+        self.coneButton: ConeButton = ConeButton(8, 167)
 
         self.speech = SpeechBubble()
         self.serve = Serve()
 
         self.capital: int = 100  # 資金($)
+        self.cupORcone: str = ""
         self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
         self.orderStack: list[any] = []  # 注文されたアイスクリームのスタック
 
@@ -45,11 +46,25 @@ class Manager:
     # スタックされたアイスを描画
     def drawScoopedIce(self):
         for i in range(len(self.scoopStack)):
-            Ice(50, 120-i*15, self.scoopStack[i]).draw()
+            Ice(50, 90-i*15, self.scoopStack[i]).draw()
+
+    def drawCupORCone(self):
+        if self.cupORcone == "cup":
+            Cup().draw()
+        elif self.cupORcone == "cone":
+            Cone().draw()
+
+    # カップまたはコーンが押されたら、指定
+    def addCupORCone(self):
+        if self.cupButton.isClicked():
+            self.cupORcone = "cup"
+        elif self.coneButton.isClicked():
+            self.cupORcone = "cone"
 
     def update(self):
         self.scoopIce()
         self.serve.update()
+        self.addCupORCone()
 
     def draw(self):
         pyxel.cls(0)
@@ -59,3 +74,4 @@ class Manager:
         self.speech.draw()
         self.serve.draw()
         self.drawScoopedIce()
+        self.drawCupORCone()

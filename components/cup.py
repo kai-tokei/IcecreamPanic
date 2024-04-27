@@ -5,7 +5,7 @@ from objects.gameobject import GameObject
 class Cup(GameObject):
     def __init__(self, x: float=32, y: float=85):
         super().__init__(x, y)
-        self.width = 50
+        self.width = 36
         self.height = 32
 
     def update(self):
