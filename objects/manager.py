@@ -35,8 +35,19 @@ class Manager:
         self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
         self.orderStack: list[any] = []  # 注文されたアイスクリームのスタック
 
+    # クリックされたアイスをスタックに追加
+    def scoopIce(self):
+        for i in self.iceButtons_list:
+            if i.isClicked():
+                self.scoopStack.append(i.col)
+
+    # スタックされたアイスを描画
+    def drawScoopedIce(self):
+        for i in self.scoopStack:
+            pass
+
     def update(self):
-        [i.update() for i in self.iceButtons_list]
+        self.scoopIce()
         self.serve.update()
 
     def draw(self):
