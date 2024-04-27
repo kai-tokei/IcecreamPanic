@@ -9,6 +9,7 @@ from components.cup import Cup
 from components.speech_bubble import SpeechBubble
 from components.serve import Serve
 from components.ice import Ice
+from components.order import Order
 
 # consts
 
@@ -30,6 +31,7 @@ class Manager:
         self.coneButton: ConeButton = ConeButton(8, 167)
 
         self.speech = SpeechBubble()
+        self.order = Order()
         self.serve = Serve()
 
         self.capital: int = 100  # 資金($)
@@ -61,17 +63,22 @@ class Manager:
         elif self.coneButton.isClicked():
             self.cupORcone = "cone"
 
+    def drawIcecreamButtons(self):
+        [i.draw() for i in self.iceButtons_list]
+
     def update(self):
         self.scoopIce()
         self.serve.update()
         self.addCupORCone()
+        self.order.update(self.scoopStack)
 
     def draw(self):
         pyxel.cls(0)
         self.cupButton.draw()
         self.coneButton.draw()
-        [i.draw() for i in self.iceButtons_list]
+        self.drawIcecreamButtons()
         self.speech.draw()
         self.serve.draw()
         self.drawScoopedIce()
         self.drawCupORCone()
+        self.order.draw()
