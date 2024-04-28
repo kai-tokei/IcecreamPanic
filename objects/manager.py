@@ -27,6 +27,7 @@ class Manager:
             IceButton(69, 167, 14),
             IceButton(88, 167, 15),
         ]
+        self.kindOfIce: list[int] = [3, 7, 8, 9, 10, 11, 14, 15]  # 登録されているアイスの種類
         self.cupButton: CupButton = CupButton(8, 146)
         self.coneButton: ConeButton = ConeButton(8, 167)
 
