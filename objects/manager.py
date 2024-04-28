@@ -49,12 +49,13 @@ class Manager:
                 self.scoopStack.append(i.col)
 
     # 注文を生成
-    def makeOrder(self) -> list[int]:
-        lengthOfOrder: int = random.randint(1, 5)
+    def makeOrder(self):
+        lengthOfOrder: int = random.randint(1, 6)
         order: list[int] = []
         for i in range(lengthOfOrder):
             order.append(random.choice(self.KIND_OF_ICE))
-        return order
+        self.ordercupORcone = "cup" if random.randint(0, 1) else "cone"
+        self.orderStack = order
 
     # スタックされたアイスを描画
     def drawScoopedIce(self):
@@ -90,9 +91,10 @@ class Manager:
         self.serve.update()
         self.addCupORCone()
         self.order.update(self.orderStack, self.ordercupORcone)
-        self.makeOrder()
         if self.serve.isClicked():
+            self.makeOrder()
             self.scoopStack = []
+            self.cupORcone = ""
 
     def draw(self):
         pyxel.cls(0)
