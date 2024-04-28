@@ -108,3 +108,5 @@ class Manager:
         self.drawScoopedIce()
         self.drawCupORCone()
         self.order.draw()
+
+        pyxel.text(90, 4, "$100", 7)
