@@ -86,15 +86,18 @@ class Manager:
         self.coneButton.draw()
         self.drawIcecreamButtons()
 
+    def serveProduct(self):
+        if self.serve.isClicked():
+            self.makeOrder()
+            self.scoopStack = []
+            self.cupORcone = ""
+
     def update(self):
         self.scoopIce()
         self.serve.update()
         self.addCupORCone()
         self.order.update(self.orderStack, self.ordercupORcone)
-        if self.serve.isClicked():
-            self.makeOrder()
-            self.scoopStack = []
-            self.cupORcone = ""
+        self.serveProduct()
 
     def draw(self):
         pyxel.cls(0)

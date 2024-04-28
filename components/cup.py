@@ -3,10 +3,10 @@ import pyxel
 from objects.gameobject import GameObject
 
 class Cup(GameObject):
-    def __init__(self, x: float=32, y: float=85):
+    def __init__(self, x: float=32, y: float=90):
         super().__init__(x, y)
         self.width = 36
-        self.height = 32
+        self.height = 25
 
     def update(self):
         pass
