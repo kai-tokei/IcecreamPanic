@@ -11,6 +11,9 @@ class Serve(GameObject):
         self.col: int = 3
         self.button: Button = Button(self.x - self.r, self.y - self.r, self.r*2, self.r*2)
 
+    def isClicked(self) -> bool:
+        return self.button.isClicked()
+
     def update(self):
         if self.button.isInside(pyxel.MOUSE_POS_X, pyxel.MOUSE_POS_Y):
             self.col = 4

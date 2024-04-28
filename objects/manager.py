@@ -36,6 +36,7 @@ class Manager:
 
         self.capital: int = 100  # 資金($)
         self.cupORcone: str = ""
+        self.ordercupORcone: str = ""
         self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
         self.orderStack: list[any] = []  # 注文されたアイスクリームのスタック
 
@@ -45,11 +46,16 @@ class Manager:
             if i.isClicked():
                 self.scoopStack.append(i.col)
 
+    # 注文を生成
+    def makeOrder(self):
+        pass
+
     # スタックされたアイスを描画
     def drawScoopedIce(self):
         for i in range(len(self.scoopStack)):
             Ice(50, 90-i*15, self.scoopStack[i]).draw()
 
+    # カップかコーンを描画
     def drawCupORCone(self):
         if self.cupORcone == "cup":
             Cup().draw()
@@ -63,20 +69,28 @@ class Manager:
         elif self.coneButton.isClicked():
             self.cupORcone = "cone"
 
+    # アイスクリームのボタンを描画
     def drawIcecreamButtons(self):
         [i.draw() for i in self.iceButtons_list]
+
+    # コントロールパネルを描画
+    def drawControllPanel(self):
+        self.cupButton.draw()
+        self.coneButton.draw()
+        self.drawIcecreamButtons()
 
     def update(self):
         self.scoopIce()
         self.serve.update()
         self.addCupORCone()
-        self.order.update(self.scoopStack, self.cupORcone)
+        self.order.update(self.orderStack, self.ordercupORcone)
+        self.makeOrder()
+        if self.serve.isClicked():
+            self.scoopStack = []
 
     def draw(self):
         pyxel.cls(0)
-        self.cupButton.draw()
-        self.coneButton.draw()
-        self.drawIcecreamButtons()
+        self.drawControllPanel()
         self.speech.draw()
         self.serve.draw()
         self.drawScoopedIce()
