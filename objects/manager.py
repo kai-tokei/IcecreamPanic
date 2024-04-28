@@ -86,6 +86,7 @@ class Manager:
         self.coneButton.draw()
         self.drawIcecreamButtons()
 
+    # アイスクリームを給仕
     def serveProduct(self):
         if self.serve.isClicked():
             self.makeOrder()
