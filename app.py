@@ -8,6 +8,7 @@ class App:
     def __init__(self):
         self.manager = Manager()
         pyxel.init(108, 192, fps=60)
+        pyxel.load("assets/icecream.pyxres")
         pyxel.mouse(visible=True)
         pyxel.run(self.update, self.draw)
 

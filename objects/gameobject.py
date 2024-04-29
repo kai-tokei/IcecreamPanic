@@ -26,7 +26,7 @@ class GameObject:
         pass
 
     def draw(self):
-        if self.img > 0:
+        if self.img >= 0:
             if self.colkey == None:
                 pyxel.blt(self.x, self.y, self.img, self.u, self.v, self.w, self.h)
             else:
