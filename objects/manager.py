@@ -81,6 +81,7 @@ class Manager:
 
     # コントロールパネルを描画
     def drawControllPanel(self):
+        pyxel.rect(0, 152, 108, 40, col=7)
         self.cupButton.draw()
         self.coneButton.draw()
         self.drawIcecreamButtons()
