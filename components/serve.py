@@ -4,13 +4,15 @@ from objects.button import Button
 
 class Serve(GameObject):
     def __init__(self, x: float=90, y: float=125):
-        super().__init__(x, y)
+        super().__init__(
+            x,
+            y,
+            self.Sprite(
+                img=0, u=0, v=64, w=16, h=16, colkey=0)
+        )
         self.x: int = x
         self.y: int = y
         self.r: int = 16
-        self.sprite = self.Sprite(
-            img=0, u=0, v=64, w=16, h=16, colkey=0
-        )
         self.button: Button = Button(self.x - self.r, self.y - self.r, self.r*2, self.r*2)
 
     def isClicked(self) -> bool:
