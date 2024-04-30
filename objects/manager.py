@@ -5,6 +5,7 @@ import random
 from components.button.cone_button import ConeButton
 from components.button.cup_button import CupButton
 from components.button.ice_button import IceButton
+from components.button.spoon_button import SpoonButton
 from components.cone import Cone
 from components.cup import Cup
 from components.speech_bubble import SpeechBubble
@@ -21,6 +22,7 @@ class Manager:
         self.KIND_OF_ICE: list[int] = [i for i in range(8)]  # 登録されているアイスの種類
         self.cupButton: CupButton = CupButton(14, 157)
         self.coneButton: ConeButton = ConeButton(14, 174)
+        self.spoonButton: SpoonButton = SpoonButton(31, 172)
 
         self.speech = SpeechBubble()
         self.order = Order()
@@ -84,6 +86,7 @@ class Manager:
         pyxel.rect(0, 152, 108, 40, col=7)
         self.cupButton.draw()
         self.coneButton.draw()
+        self.spoonButton.draw()
         self.drawIcecreamButtons()
 
     # アイスクリームを給仕
@@ -99,6 +102,7 @@ class Manager:
         self.addCupORCone()
         self.order.update(self.orderStack, self.ordercupORcone)
         self.serveProduct()
+        self.spoonButton.update()
 
     def draw(self):
         pyxel.cls(0)
