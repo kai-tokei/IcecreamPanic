@@ -2,9 +2,11 @@ import pyxel
 from objects.gameobject import GameObject
 
 class Ice(GameObject):
-    def __init__(self, x: float, y: float, col: int):
+    def __init__(self, x: float, y: float, kind: int=0):
         super().__init__(x, y)
-        self.col = col
+        self.kind = kind
+        self.sp = self.Sprite(
+            u=16+kind%3*16, v=(kind//3)*16, colkey=0)
 
     def draw(self):
-        pyxel.circ(self.x, self.y, r=15, col=self.col)
+        return super().draw()
