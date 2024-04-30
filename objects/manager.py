@@ -24,7 +24,6 @@ class Manager:
         self.coneButton: ConeButton = ConeButton(14, 174)
         self.spoonButton: SpoonButton = SpoonButton(31, 172)
 
-        self.speech = SpeechBubble()
         self.order = Order()
         self.serve = Serve(87, 128)
 
@@ -105,7 +104,6 @@ class Manager:
     def draw(self):
         pyxel.cls(1)
         self.drawControllPanel()
-        self.speech.draw()
         self.serve.draw()
         self.drawScoopedIce()
         self.order.draw()
