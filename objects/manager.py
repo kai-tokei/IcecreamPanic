@@ -58,9 +58,9 @@ class Manager:
         self.orderStack = order
 
     # スタックされたアイスを描画
-    def drawScoopedIce(self):
+    def drawScoopedIce(self, x: int=47, y: int=95):
         for i in range(len(self.scoopStack)):
-            Ice(50, 90-i*15, self.scoopStack[i]).draw()
+            Ice(x, y-i*8, self.scoopStack[i]).draw()
 
     # カップかコーンを描画
     def drawCupORCone(self):
