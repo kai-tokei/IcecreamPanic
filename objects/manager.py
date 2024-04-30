@@ -67,8 +67,7 @@ class Manager:
 
     # アイスクリームのボタンを描画
     def drawIcecreamButtons(self):
-        for i in self.iceButtons_list:
-            i.draw()
+        [i.draw() for i in self.iceButtons_list]
 
     # コントロールパネルを描画
     def drawControllPanel(self):
