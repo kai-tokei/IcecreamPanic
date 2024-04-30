@@ -13,9 +13,6 @@ class SpeechBubble(GameObject):
             u=48, v=64, colkey=0)
         self.LENGTH: int = 5
 
-    def udpate(self):
-        pass
-
     def draw(self):
         pyxel.blt(
             self.x,
