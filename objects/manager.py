@@ -28,8 +28,6 @@ class Manager:
         self.serve = Serve(87, 128)
 
         self.capital: int = 100  # 資金($)
-        self.cupORcone: str = ""
-        self.ordercupORcone: str = ""
         self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
         self.orderStack: list[any] = []  # 注文されたアイスクリームのスタック
 
@@ -53,7 +51,6 @@ class Manager:
         order: list[int] = []
         for i in range(lengthOfOrder):
             order.append(random.choice(self.KIND_OF_ICE))
-        self.ordercupORcone = "cup" if random.randint(0, 1) else "cone"
         self.orderStack = order
 
     # スタックされたアイスを描画
@@ -61,19 +58,12 @@ class Manager:
         for i in range(len(self.scoopStack)):
             Ice(x, y-i*8, self.scoopStack[i]).draw()
 
-    # カップかコーンを描画
-    def drawCupORCone(self):
-        if self.cupORcone == "cup":
-            Cup().draw()
-        elif self.cupORcone == "cone":
-            Cone().draw()
-
-    # カップまたはコーンが押されたら、指定
-    def addCupORCone(self):
+    # カップまたはコーンが押されたら、スタック
+    def pushCupORCone(self):
         if self.cupButton.isClicked():
-            self.cupORcone = "cup"
+            pass
         elif self.coneButton.isClicked():
-            self.cupORcone = "cone"
+            pass
 
     # アイスクリームのボタンを描画
     def drawIcecreamButtons(self):
@@ -92,12 +82,11 @@ class Manager:
     def serveProduct(self):
         if self.serve.isClicked():
             self.scoopStack = []
-            self.cupORcone = ""
 
     def update(self):
         self.scoopIce()
         self.serve.update()
-        self.addCupORCone()
+        self.pushCupORCone()
         self.serveProduct()
         self.spoonButton.update()
 
@@ -105,7 +94,7 @@ class Manager:
         pyxel.cls(1)
         self.drawControllPanel()
         self.serve.draw()
-        self.drawScoopedIce()
         self.order.draw()
+        self.drawScoopedIce()
 
         pyxel.text(90, 4, "$100", 7)
