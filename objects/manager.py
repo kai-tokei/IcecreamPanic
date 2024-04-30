@@ -17,25 +17,14 @@ from components.order import Order
 class Manager:
     def __init__(self) -> None:
         # ControllPalette
-        self.iceButtons_list = []
-        # self.iceButtons_list = [
-        #     IceButton(31, 146, 3),
-        #     IceButton(50, 146, 7),
-        #     IceButton(69, 146, 8),
-        #     IceButton(88, 146, 9),
-
-        #     IceButton(31, 167, 10),
-        #     IceButton(50, 167, 11),
-        #     IceButton(69, 167, 14),
-        #     IceButton(88, 167, 15),
-        # ]
-        self.KIND_OF_ICE: list[int] = [3, 7, 8, 9, 10, 11, 14, 15]  # 登録されているアイスの種類
+        self.iceButtons_list = self.makeIceButtons()
+        self.KIND_OF_ICE: list[int] = [i for i in range(8)]  # 登録されているアイスの種類
         self.cupButton: CupButton = CupButton(14, 157)
         self.coneButton: ConeButton = ConeButton(14, 174)
 
         self.speech = SpeechBubble()
         self.order = Order()
-        self.serve = Serve()
+        self.serve = Serve(87, 128)
 
         self.capital: int = 100  # 資金($)
         self.cupORcone: str = ""
@@ -47,7 +36,15 @@ class Manager:
     def scoopIce(self):
         for i in self.iceButtons_list:
             if i.isClicked():
-                self.scoopStack.append(i.col)
+                self.scoopStack.append(i.kind)
+
+    # アイスのボタンを生成
+    def makeIceButtons(self) -> list[IceButton]:
+        iceButtons_list = []
+        for i in range(7):
+            iceButtons_list.append(IceButton(
+                x=31+(i//4*16)+(i%4)*16, y=156+i//4*16, kind=i))
+        return iceButtons_list
 
     # 注文を生成
     def makeOrder(self):
@@ -79,7 +76,8 @@ class Manager:
 
     # アイスクリームのボタンを描画
     def drawIcecreamButtons(self):
-        [i.draw() for i in self.iceButtons_list]
+        for i in self.iceButtons_list:
+            i.draw()
 
     # コントロールパネルを描画
     def drawControllPanel(self):
