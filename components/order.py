@@ -1,9 +1,11 @@
 import pyxel
 
 from objects.gameobject import GameObject
-from components.ice import Ice
+
 from components.button.cone_button import ConeButton
-from components.button.cup_button import CupButton
+from components.ice import Ice
+from components.cup import Cup
+from components.speech_bubble import SpeechBubble
 
 class Order(GameObject):
     class OrderItem:
@@ -15,6 +17,7 @@ class Order(GameObject):
     def __init__(self, x: float=16, y: float=25):
         super().__init__(x, y)
         self.orderStack: list[self.OrderItem] = []
+        self.speechBubble = SpeechBubble()
 
     def push(self, item: OrderItem):
         self.orderStack.append(item)
@@ -22,14 +25,17 @@ class Order(GameObject):
     def clear(self):
         self.orderStack.clear()
 
-    def drawIce(self, x: int, y: int):
-        pass
+    def drawIce(self, x: int, y: int, kind: int):
+        ice = Ice(x, y, kind)
+        ice.draw()
 
     def drawCup(self, x: int, y: int):
-        pass
+        cup = Cup(x, y)
+        cup.draw()
 
     def drawCone(self, x: int, y: int):
-        pass
+        cone = ConeButton(x, y)
+        cone.draw()
 
     def draw(self):
-        pass
+        self.speechBubble.draw()

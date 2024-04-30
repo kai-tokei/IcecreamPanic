@@ -92,7 +92,6 @@ class Manager:
     # アイスクリームを給仕
     def serveProduct(self):
         if self.serve.isClicked():
-            self.makeOrder()
             self.scoopStack = []
             self.cupORcone = ""
 
@@ -100,7 +99,6 @@ class Manager:
         self.scoopIce()
         self.serve.update()
         self.addCupORCone()
-        self.order.update(self.orderStack, self.ordercupORcone)
         self.serveProduct()
         self.spoonButton.update()
 
@@ -110,7 +108,6 @@ class Manager:
         self.speech.draw()
         self.serve.draw()
         self.drawScoopedIce()
-        self.drawCupORCone()
         self.order.draw()
 
         pyxel.text(90, 4, "$100", 7)
