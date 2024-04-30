@@ -17,20 +17,21 @@ from components.order import Order
 class Manager:
     def __init__(self) -> None:
         # ControllPalette
-        self.iceButtons_list = [
-            IceButton(31, 146, 3),
-            IceButton(50, 146, 7),
-            IceButton(69, 146, 8),
-            IceButton(88, 146, 9),
+        self.iceButtons_list = []
+        # self.iceButtons_list = [
+        #     IceButton(31, 146, 3),
+        #     IceButton(50, 146, 7),
+        #     IceButton(69, 146, 8),
+        #     IceButton(88, 146, 9),
 
-            IceButton(31, 167, 10),
-            IceButton(50, 167, 11),
-            IceButton(69, 167, 14),
-            IceButton(88, 167, 15),
-        ]
+        #     IceButton(31, 167, 10),
+        #     IceButton(50, 167, 11),
+        #     IceButton(69, 167, 14),
+        #     IceButton(88, 167, 15),
+        # ]
         self.KIND_OF_ICE: list[int] = [3, 7, 8, 9, 10, 11, 14, 15]  # 登録されているアイスの種類
-        self.cupButton: CupButton = CupButton(8, 146)
-        self.coneButton: ConeButton = ConeButton(8, 167)
+        self.cupButton: CupButton = CupButton(14, 157)
+        self.coneButton: ConeButton = ConeButton(14, 174)
 
         self.speech = SpeechBubble()
         self.order = Order()

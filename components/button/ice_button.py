@@ -3,14 +3,16 @@ from objects.gameobject import GameObject
 from objects.button import Button
 
 class IceButton(GameObject):
-    def __init__(self, x: float, y: float, col: int = 0):
+    # kind: スプライトシート上のアイスを3x3のグリッドと捉え、左上から0~8でidを指定
+    def __init__(self, x: float, y: float, kind: int = 0):
         super().__init__(x, y)
         self.width: int = 16
         self.height: int = 16
-        self.col: int = col
+        self.kind: int = kind
         self.cover: self.Sprite = self.Sprite(
-            img=0, u=16, v=48, w=16, h=16, colkey=2
-        )
+            u=16, v=48, colkey=2)
+        self.ice: self.Sprite = self.Sprite(
+            u=16+kind%3*16, v=16*kind//3, colkey=0)  # スプライトシート上の座標を計算して、アイスを割り当てる
         self.button: Button = Button(
             self.x,
             self.y,
@@ -24,4 +26,17 @@ class IceButton(GameObject):
         self.isClicked()
 
     def draw(self):
-        pyxel.rect(self.x, self.y, self.width, self.height, self.col)
+        pyxel.blt(
+            img=self.cover.img,
+            u=self.cover.u,
+            v=self.cover.v,
+            w=self.cover.w,
+            h=self.cover.h,
+            colkey=self.cover.colkey)
+        pyxel.blt(
+            img=self.ice.img,
+            u=self.ice.u,
+            v=self.ice.v,
+            w=self.ice.w,
+            h=self.ice.h,
+            colkey=self.ice.colkey)
