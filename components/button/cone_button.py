@@ -8,7 +8,7 @@ class ConeButton(GameObject):
             x,
             y,
             self.Sprite(
-                img=0, u=0, v=0, colkey=0
+                u=0, v=0, colkey=0
             )
         )
         self.width: int = 16

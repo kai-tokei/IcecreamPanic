@@ -8,7 +8,7 @@ class Serve(GameObject):
             x,
             y,
             self.Sprite(
-                img=0, u=0, v=64, colkey=0)
+                u=0, v=64, colkey=0)
         )
         self.x: int = x
         self.y: int = y

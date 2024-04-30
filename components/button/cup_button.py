@@ -4,10 +4,15 @@ from objects.button import Button
 
 class CupButton(GameObject):
     def __init__(self, x: float, y: float):
-        super().__init__(x, y)
+        super().__init__(
+            x,
+            y,
+            self.Sprite(
+
+            )
+        )
         self.width: int = 16
-        self.height: int = 14
-        self.col: int = 7
+        self.height: int = 16
         self.button: Button = Button(
             self.x,
             self.y,
@@ -21,24 +26,4 @@ class CupButton(GameObject):
         self.isClicked()
 
     def draw(self):
-        pyxel.line(
-            self.x + self.width * 1/6,
-            self.y,
-            self.x + self.width * 5/6,
-            self.y,
-            self.col
-        )
-        pyxel.line(
-            self.x + self.width * 1/6,
-            self.y,
-            self.x,
-            self.y + self.height,
-            self.col
-        )
-        pyxel.line(
-            self.x + self.width * 5/6,
-            self.y,
-            self.x + self.width,
-            self.y + self.height,
-            self.col
-        )
+        return super().draw()

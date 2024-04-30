@@ -5,7 +5,7 @@ class GameObject:
     class Sprite:
         def __init__(
                 self,
-                img: int=-1,
+                img: int=0,
                 u: int=0,
                 v: int=0,
                 w: int=16,

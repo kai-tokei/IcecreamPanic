@@ -8,7 +8,7 @@ class Cup(GameObject):
             x,
             y,
             self.Sprite(
-                img=0, u=0, v=48, colkey=0)
+                u=0, v=48, colkey=0)
         )
 
     def update(self):
