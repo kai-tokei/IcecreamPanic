@@ -2,20 +2,29 @@ import pyxel
 from objects.gameobject import GameObject
 
 class Order(GameObject):
+    class OrderItem:
+        def __init__(self, tag: str="ice", iceIndex: int=0) -> None:
+            self.tag: str =tag
+            self.iceIndex: int = iceIndex
+
     def __init__(self, x: float=16, y: float=25):
         super().__init__(x, y)
-        self.orderStack: list[int] = []
-        self.cupORcone: str = ""
+        self.orderStack: list[self.OrderItem] = []
 
-    def update(self, orderStack: list[int], cupORcone):
-        self.orderStack = orderStack
-        self.cupORcone = cupORcone
+    def push(self, item: OrderItem):
+        pass
+
+    def clear(self):
+        pass
+
+    def drawIce(self):
+        pass
+
+    def drawCup(self):
+        pass
+
+    def drawCone(self):
+        pass
 
     def draw(self):
-        if self.cupORcone == "cup":
-            pyxel.circb(self.x, 28, 5, 0)
-        else:
-            pyxel.circb(self.x, 28, 5, 9)
-
-        for i in range(len(self.orderStack)):
-            pyxel.circ(self.x, 25-i*5, 5, self.orderStack[i])
+        pass

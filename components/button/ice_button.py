@@ -26,6 +26,7 @@ class IceButton(GameObject):
         self.isClicked()
 
     def draw(self):
+        # アイスの上に、型抜きしたスプライトを載せる
         pyxel.blt(
             self.x,
             self.y,
