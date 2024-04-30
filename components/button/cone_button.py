@@ -4,10 +4,15 @@ from objects.button import Button
 
 class ConeButton(GameObject):
     def __init__(self, x: float, y: float):
-        super().__init__(x, y)
+        super().__init__(
+            x,
+            y,
+            self.Sprite(
+                img=0, u=0, v=0, colkey=0
+            )
+        )
         self.width: int = 16
-        self.height: int = 18
-        self.col: int = 9
+        self.height: int = 16
         self.button: Button = Button(
             self.x,
             self.y,
@@ -21,12 +26,4 @@ class ConeButton(GameObject):
         self.isClicked()
 
     def draw(self):
-        pyxel.trib(
-            self.x + self.width/2,
-            self.y,
-            self.x,
-            self.y + self.height,
-            self.x + self.width,
-            self.y + self.height,
-            self.col
-        )
+        return super().draw()

@@ -7,9 +7,9 @@ class GameObject:
                 self,
                 img: int=-1,
                 u: int=0,
-                v: int=5,
-                w: int=5,
-                h: int=5,
+                v: int=0,
+                w: int=16,
+                h: int=16,
                 colkey: int=None,
             ) -> None:
             self.img = img
