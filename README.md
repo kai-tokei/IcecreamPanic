@@ -18,7 +18,7 @@ IcecreamPanic is a game where you respond to customer demands and make ice cream
 - **Tap** on the screen to interact with customers and make ice creams.
 
 ## Screenshots(In Progress)
-![image](https://github.com/kai-tokei/IcecreamPanic/assets/89783070/a36041b7-ff60-4795-94f5-7c1618074529)
+![image](https://github.com/kai-tokei/IcecreamPanic/assets/89783070/dd284675-bfcb-489e-b492-268ab38bb125)
 
 ## Contributing
 Contributions are welcome! Please feel free to submit any issues or pull requests.
