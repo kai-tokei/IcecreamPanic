@@ -8,8 +8,7 @@ class Cone(GameObject):
             x,
             y,
             self.Sprite(
-                img=0, u=0, v=16, w=16, h=32, colkey=0
-            )
+                img=0, u=0, v=16, w=16, h=32, colkey=0)
         )
 
 
