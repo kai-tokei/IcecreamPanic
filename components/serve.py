@@ -7,8 +7,10 @@ class Serve(GameObject):
         super().__init__(x, y)
         self.x: int = x
         self.y: int = y
-        self.r: int = 12
-        self.col: int = 3
+        self.r: int = 16
+        self.sprite = self.Sprite(
+            img=0, u=0, v=64, w=16, h=16, colkey=0
+        )
         self.button: Button = Button(self.x - self.r, self.y - self.r, self.r*2, self.r*2)
 
     def isClicked(self) -> bool:
@@ -21,4 +23,4 @@ class Serve(GameObject):
             self.col = 3
 
     def draw(self):
-        pyxel.circ(self.x, self.y, self.r, self.col)
+        return super().draw()
