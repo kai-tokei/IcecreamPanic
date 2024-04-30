@@ -3,7 +3,7 @@ import pyxel
 from objects.gameobject import GameObject
 
 class Cone(GameObject):
-    def __init__(self, x: float=34, y: float=90):
+    def __init__(self, x: float=47, y: float=106):
         super().__init__(
             x,
             y,

@@ -105,7 +105,7 @@ class Manager:
         self.spoonButton.update()
 
     def draw(self):
-        pyxel.cls(0)
+        pyxel.cls(1)
         self.drawControllPanel()
         self.speech.draw()
         self.serve.draw()
