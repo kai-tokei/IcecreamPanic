@@ -34,7 +34,7 @@ class Order(GameObject):
         cone.draw()
 
     def draw(self):
-        self.speech.draw()
+        self.speechBubble.draw()
         for y in range(len(self.orderStack)):
             X = 6
             Y = 100-16*y

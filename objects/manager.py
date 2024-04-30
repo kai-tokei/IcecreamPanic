@@ -8,7 +8,6 @@ from components.button.ice_button import IceButton
 from components.button.spoon_button import SpoonButton
 from components.cone import Cone
 from components.cup import Cup
-from components.speech_bubble import SpeechBubble
 from components.serve import Serve
 from components.ice import Ice
 from components.order import Order
@@ -19,7 +18,7 @@ class Manager:
     def __init__(self) -> None:
         # ControllPalette
         self.iceButtons_list = self.makeIceButtons()
-        self.KIND_OF_ICE: list[int] = [i for i in range(8)]  # 登録されているアイスの種類
+        self.KINDS_OF_ICE: list[int] = [i for i in range(8)]  # 登録されているアイスの種類
         self.cupButton: CupButton = CupButton(14, 157)
         self.coneButton: ConeButton = ConeButton(14, 174)
         self.spoonButton: SpoonButton = SpoonButton(31, 172)
@@ -50,7 +49,7 @@ class Manager:
         lengthOfOrder: int = random.randint(1, 6)
         order: list[int] = []
         for i in range(lengthOfOrder):
-            order.append(random.choice(self.KIND_OF_ICE))
+            order.append(random.choice(self.KINDS_OF_ICE))
         self.orderStack = order
 
     # スタックされたアイスを描画
