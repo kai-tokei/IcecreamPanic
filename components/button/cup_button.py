@@ -8,8 +8,7 @@ class CupButton(GameObject):
             x,
             y,
             self.Sprite(
-
-            )
+                u=0, v=48, colkey=0)
         )
         self.width: int = 16
         self.height: int = 16
