@@ -1,4 +1,5 @@
 import pyxel
+
 from objects.gameobject import GameObject
 
 class SpeechBubble(GameObject):
