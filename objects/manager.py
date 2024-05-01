@@ -13,6 +13,7 @@ from components.ice import Ice
 from components.order import Order
 
 # consts
+from consts.icecreamstackitem import IceCreamStackItem
 
 class Manager:
     def __init__(self) -> None:
@@ -27,14 +28,14 @@ class Manager:
         self.serve = Serve(87, 128)
 
         self.capital: int = 100  # 資金($)
-        self.scoopStack: list[any] = []  # 今作っているアイスクリームのスタック
-        self.orderStack: list[any] = []  # 注文されたアイスクリームのスタック
+        self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
+        self.orderStack: list[IceCreamStackItem] = []  # 注文されたアイスクリームのスタック
 
     # クリックされたアイスをスタックに追加
     def scoopIce(self):
         for i in self.iceButtons_list:
             if i.isClicked():
-                self.scoopStack.append(i.kind)
+                self.scoopStack.append(IceCreamStackItem(iceIndex=i.kind))
 
     # アイスのボタンを生成
     def makeIceButtons(self) -> list[IceButton]:
@@ -55,14 +56,30 @@ class Manager:
     # スタックされたアイスを描画
     def drawScoopedIce(self, x: int=47, y: int=95):
         for i in range(len(self.scoopStack)):
-            Ice(x, y-i*8, self.scoopStack[i]).draw()
+            crtItem = self.scoopStack[i]
+            if crtItem.tag == "ice":
+                Ice(x, y-i*8, crtItem.iceIndex).draw()
+            else:
+                if i == 0:
+                    if crtItem.tag == "cup": Cup().draw()
+                    elif crtItem.tag == "cone": Cone().draw()
+                else:
+                    # 完全に間違っているから、何かアクション
+                    pass
+
+    # カップをスタック
+    def pushCup(self):
+        self.scoopStack.append(IceCreamStackItem(tag="cup"))
+
+    # コーンをスタック
+    def pushCone(self):
+        self.scoopStack.append(IceCreamStackItem(tag="cone"))
 
     # カップまたはコーンが押されたら、スタック
-    def pushCupORCone(self):
-        if self.cupButton.isClicked():
-            pass
-        elif self.coneButton.isClicked():
-            pass
+    def pushCupOrCone(self):
+        # カップとコーンの追加
+        if self.coneButton.isClicked(): self.pushCone()
+        if self.cupButton.isClicked(): self.pushCup()
 
     # アイスクリームのボタンを描画
     def drawIcecreamButtons(self):
@@ -84,8 +101,8 @@ class Manager:
     def update(self):
         self.scoopIce()
         self.serve.update()
-        self.pushCupORCone()
         self.serveProduct()
+        self.pushCupOrCone()
         self.spoonButton.update()
 
     def draw(self):
