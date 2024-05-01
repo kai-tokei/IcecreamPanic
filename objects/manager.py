@@ -54,8 +54,8 @@ class Manager:
         self.orderStack = order
 
     # スタックされたアイスを描画
-    def drawScoopedIce(self, x: int=47, y: int=95):
-        for i in range(len(self.scoopStack)):
+    def drawScoopedIce(self, x: int=47, y: int=103):
+        for i in range(len(self.scoopStack)-1, -1, -1):
             crtItem = self.scoopStack[i]
             if crtItem.tag == "ice":
                 Ice(x, y-i*8, crtItem.iceIndex).draw()
