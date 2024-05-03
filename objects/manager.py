@@ -19,7 +19,7 @@ class Manager:
     def __init__(self) -> None:
         # ControllPalette
         self.iceButtons_list = self.makeIceButtons()
-        self.KINDS_OF_ICE: list[int] = [i for i in range(8)]  # 登録されているアイスの種類
+        self.KINDS_OF_ICE: list[int] = [i for i in range(7)]  # 登録されているアイスの種類
         self.cupButton: CupButton = CupButton(14, 157)
         self.coneButton: ConeButton = ConeButton(14, 174)
         self.spoonButton: SpoonButton = SpoonButton(31, 172)
@@ -30,6 +30,8 @@ class Manager:
         self.capital: int = 100  # 資金($)
         self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
         self.orderStack: list[IceCreamStackItem] = []  # 注文されたアイスクリームのスタック
+
+        self.makeOrder()
 
     # クリックされたアイスをスタックに追加
     def scoopIce(self):
@@ -48,10 +50,12 @@ class Manager:
     # 注文を生成
     def makeOrder(self):
         lengthOfOrder: int = random.randint(1, 6)
-        order: list[int] = []
-        for i in range(lengthOfOrder):
-            order.append(random.choice(self.KINDS_OF_ICE))
-        self.orderStack = order
+        self.order.clear()
+        # カップかコーンをランダムで選択
+        self.order.push(IceCreamStackItem(tag= "cone" if random.randint(0, 1) else "cup"))
+        # アイスを適当にスタック
+        for _ in range(lengthOfOrder):
+            self.order.push(IceCreamStackItem(iceIndex=random.choice(self.KINDS_OF_ICE)))
 
     # スタックされたアイスを描画
     def drawScoopedIce(self, x: int=47, y: int=103):
@@ -64,7 +68,7 @@ class Manager:
                     if crtItem.tag == "cup": Cup().draw()
                     elif crtItem.tag == "cone": Cone().draw()
                 else:
-                    # 完全に間違っているから、何かアクション
+                    # 先にアイスを乗せようとしているから、何かアクション
                     pass
 
     # カップをスタック
@@ -97,6 +101,7 @@ class Manager:
     def serveProduct(self):
         if self.serve.isClicked():
             self.scoopStack = []
+            self.makeOrder()
 
     def update(self):
         self.scoopIce()
