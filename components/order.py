@@ -10,7 +10,7 @@ from components.speech_bubble import SpeechBubble
 from consts.icecreamstackitem import IceCreamStackItem
 
 class Order(GameObject):
-    def __init__(self, x: float=16, y: float=25):
+    def __init__(self, x: float=4, y: float=110):
         super().__init__(x, y)
         self.orderStack: list[IceCreamStackItem] = []
         self.speechBubble = SpeechBubble()
@@ -34,13 +34,13 @@ class Order(GameObject):
         cone.draw()
 
     def draw(self):
-        self.speechBubble.draw()
+        X = self.x
         for y in range(len(self.orderStack)):
-            X = 6
-            Y = 100-16*y
+            Y = self.y - 16*y
             if self.orderStack[y].tag == "cone":
                 self.drawCone(X, Y)
             elif self.orderStack[y].tag == "cup":
                 self.drawCup(X, Y)
             else:
                 self.drawIce(X, Y, kind=self.orderStack[y].iceIndex)
+        self.speechBubble.draw()

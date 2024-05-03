@@ -11,7 +11,7 @@ class SpeechBubble(GameObject):
             u=48, v=56, colkey=0)
         self.bottom: self.Sprite = self.Sprite(
             u=48, v=64, colkey=0)
-        self.LENGTH: int = 5
+        self.LENGTH: int = 7
 
     def draw(self):
         pyxel.blt(
