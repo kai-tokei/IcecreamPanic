@@ -11,8 +11,8 @@ class SpoonButton(GameObject):
         self.button = Button(
             x, y, 16, 16)
 
-    def update(self):
-        pass
+    def isClicked(self):
+        return self.button.isClicked()
 
     def draw(self):
         return super().draw()

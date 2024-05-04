@@ -3,6 +3,7 @@ import pyxel
 from objects.gameobject import GameObject
 
 from components.button.cone_button import ConeButton
+from components.button.spoon_button import SpoonButton
 from components.ice import Ice
 from components.cup import Cup
 from components.speech_bubble import SpeechBubble
@@ -33,6 +34,10 @@ class Order(GameObject):
         cone = ConeButton(x, y)
         cone.draw()
 
+    def drawSpoon(self, x: int, y: int):
+        spoon = SpoonButton(x, y)
+        spoon.draw()
+
     def draw(self):
         X = self.x
         for y in range(len(self.orderStack)):
@@ -41,6 +46,8 @@ class Order(GameObject):
                 self.drawCone(X, Y)
             elif self.orderStack[y].tag == "cup":
                 self.drawCup(X, Y)
+            elif self.orderStack[y].tag == "spoon":
+                self.drawSpoon(X, Y)
             else:
                 self.drawIce(X, Y, kind=self.orderStack[y].iceIndex)
         self.speechBubble.draw()

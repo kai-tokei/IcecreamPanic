@@ -39,6 +39,11 @@ class Manager:
             if i.isClicked():
                 self.scoopStack.append(IceCreamStackItem(iceIndex=i.kind))
 
+    # スプーンを追加
+    def addSpoon(self):
+        if self.spoonButton.isClicked():
+            self.scoopStack.append(IceCreamStackItem(tag="spoon"))
+
     # アイスのボタンを生成
     def makeIceButtons(self) -> list[IceButton]:
         iceButtons_list = []
@@ -56,6 +61,8 @@ class Manager:
         # アイスを適当にスタック
         for _ in range(lengthOfOrder):
             self.order.push(IceCreamStackItem(iceIndex=random.choice(self.KINDS_OF_ICE)))
+        if random.randint(0, 1):
+            self.order.push(IceCreamStackItem(tag="spoon"))
 
     # スタックされたアイスを描画
     def drawScoopedIce(self, x: int=47, y: int=103):
@@ -63,6 +70,9 @@ class Manager:
             crtItem = self.scoopStack[i]
             if crtItem.tag == "ice":
                 Ice(x, y-i*8, crtItem.iceIndex).draw()
+            elif crtItem.tag == "spoon":
+                SpoonButton(x, y-i*8).draw()
+                pass
             else:
                 if i == 0:
                     if crtItem.tag == "cup": Cup().draw()
@@ -108,7 +118,7 @@ class Manager:
         self.serve.update()
         self.serveProduct()
         self.pushCupOrCone()
-        self.spoonButton.update()
+        self.addSpoon()
 
     def draw(self):
         pyxel.cls(1)
