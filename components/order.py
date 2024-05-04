@@ -22,6 +22,9 @@ class Order(GameObject):
     def clear(self):
         self.orderStack.clear()
 
+    def get(self) -> list[IceCreamStackItem]:
+        return self.orderStack
+
     def drawIce(self, x: int, y: int, kind: int):
         ice = Ice(x, y, kind)
         ice.draw()
