@@ -29,7 +29,6 @@ class Manager:
 
         self.capital: int = 100  # 資金($)
         self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
-        self.orderStack: list[IceCreamStackItem] = []  # 注文されたアイスクリームのスタック
 
         self.makeOrder()
 
@@ -110,8 +109,29 @@ class Manager:
     # アイスクリームを給仕
     def serveProduct(self):
         if self.serve.isClicked():
+            if self.checkProduct():
+                pass
             self.scoopStack = []
             self.makeOrder()
+
+    # 完成品がオーダーと合っているか確認
+    def checkProduct(self) -> bool:
+        # 長さが異なっていたら、間違い
+        if len(self.scoopStack) != len(self.order.orderStack):
+            return False
+        # 種類を確認していく
+        for i in range(len(self.scoopStack)):
+            scoopTag = self.scoopStack[i].tag
+            orderTag = self.order.orderStack[i].tag
+            if scoopTag == orderTag:
+                if scoopTag == "ice":
+                    if self.scoopStack[i].iceIndex == self.order.orderStack[i].iceIndex:
+                        continue
+                    else:
+                        return False
+            else:
+                return False
+        return True
 
     def update(self):
         self.scoopIce()
