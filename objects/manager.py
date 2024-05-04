@@ -110,9 +110,11 @@ class Manager:
     def serveProduct(self):
         if self.serve.isClicked():
             if self.checkProduct():
-                pass
+                self.capital += 10 + len(self.scoopStack)
+                self.makeOrder()
+            else:
+                self.capital -= (10 + len(self.scoopStack)) // 2
             self.scoopStack = []
-            self.makeOrder()
 
     # 完成品がオーダーと合っているか確認
     def checkProduct(self) -> bool:
@@ -147,4 +149,4 @@ class Manager:
         self.order.draw()
         self.drawScoopedIce()
 
-        pyxel.text(90, 4, "$100", 7)
+        pyxel.text(90, 4, f'${self.capital}', 7)
