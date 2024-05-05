@@ -9,7 +9,7 @@ class CapitalSnack(GameObject):
         self.time: int = 0
         self.col: int = 3 if corrected else 8
         self.G: float = 9.8 * 0.1
-        self.showTime: float = 60 * 0.5
+        self.showTime: float = 60
         self.vy: float = 0
         self.exist: bool = exist
 
