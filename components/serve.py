@@ -12,8 +12,8 @@ class Serve(GameObject):
         )
         self.x: int = x
         self.y: int = y
-        self.r: int = 16
-        self.button: Button = Button(self.x - self.r, self.y - self.r, self.r*2, self.r*2)
+        self.r: int = 8
+        self.button: Button = Button(self.x, self.y, self.r*2, self.r*2)
 
     def isClicked(self) -> bool:
         return self.button.isClicked()

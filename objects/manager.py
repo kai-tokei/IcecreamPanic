@@ -1,5 +1,6 @@
 import pyxel
 import random
+import copy
 
 # Components
 from components.button.cone_button import ConeButton
@@ -30,7 +31,11 @@ class Manager:
 
         self.capital: int = 100  # 資金($)
         self.capitalSnack: CapitalSnack = CapitalSnack(exist=False)
+
         self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
+        self.topIcePos: list[float] = [47, 0]
+        self.G: float = 9.8 * 0.05
+        self.vy: float = 0
 
         self.makeOrder()
 
@@ -38,11 +43,13 @@ class Manager:
     def scoopIce(self):
         for i in self.iceButtons_list:
             if i.isClicked():
+                self.resetTopIcePos()
                 self.scoopStack.append(IceCreamStackItem(iceIndex=i.kind))
 
     # スプーンを追加
     def addSpoon(self):
         if self.spoonButton.isClicked():
+            self.resetTopIcePos()
             self.scoopStack.append(IceCreamStackItem(tag="spoon"))
 
     # アイスのボタンを生成
@@ -69,10 +76,22 @@ class Manager:
     def drawScoopedIce(self, x: int=47, y: int=103):
         for i in range(len(self.scoopStack)-1, -1, -1):
             crtItem = self.scoopStack[i]
+            posX = x
+            posY = y-i*10
+            # てっぺんだけ、落とすアニメーション
+            if i == len(self.scoopStack)-1:
+                posX = self.topIcePos[0]
+                posY = self.topIcePos[1]
+                if posY < y-i*10:
+                    self.vy += self.G
+                    posY += self.vy
+                    self.topIcePos[1] = posY
+                else:
+                    posY = y-i*10
             if crtItem.tag == "ice":
-                Ice(x, y-i*8, crtItem.iceIndex).draw()
+                Ice(posX, posY, crtItem.iceIndex).draw()
             elif crtItem.tag == "spoon":
-                SpoonButton(x, y-i*8).draw()
+                SpoonButton(posX, posY).draw()
                 pass
             else:
                 if i == 0:
@@ -81,6 +100,10 @@ class Manager:
                 else:
                     # 先にアイスを乗せようとしているから、何かアクション
                     pass
+
+    def resetTopIcePos(self):
+        self.topIcePos: list[float] = [47, 0]
+        self.vy: float = 0
 
     # カップをスタック
     def pushCup(self):
