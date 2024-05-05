@@ -11,6 +11,7 @@ from components.cup import Cup
 from components.serve import Serve
 from components.ice import Ice
 from components.order import Order
+from components.capital_snack import CapitalSnack
 
 # consts
 from consts.icecreamstackitem import IceCreamStackItem
@@ -28,6 +29,7 @@ class Manager:
         self.serve = Serve(87, 128)
 
         self.capital: int = 100  # 資金($)
+        self.capitalSnack: CapitalSnack = CapitalSnack(exist=False)
         self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
 
         self.makeOrder()
@@ -109,11 +111,16 @@ class Manager:
     # アイスクリームを給仕
     def serveProduct(self):
         if self.serve.isClicked():
+            point = 0
             if self.checkProduct():
-                self.capital += 10 + len(self.scoopStack)
+                point = 10 + len(self.scoopStack)
+                self.capitalSnack = CapitalSnack(point=point, corrected=True, exist=True)
+                self.capital += point
                 self.makeOrder()
             else:
-                self.capital -= (10 + len(self.scoopStack)) // 2
+                point = (10 + len(self.scoopStack)) // 2
+                self.capitalSnack = CapitalSnack(point=point, corrected=False, exist=True)
+                self.capital -= point
             self.scoopStack = []
 
     # 完成品がオーダーと合っているか確認
@@ -141,6 +148,7 @@ class Manager:
         self.serveProduct()
         self.pushCupOrCone()
         self.addSpoon()
+        self.capitalSnack.update()
 
     def draw(self):
         pyxel.cls(1)
@@ -148,5 +156,6 @@ class Manager:
         self.serve.draw()
         self.order.draw()
         self.drawScoopedIce()
+        self.capitalSnack.draw()
 
-        pyxel.text(90, 4, f'${self.capital}', 7)
+        pyxel.text(88, 4, f'${self.capital}', 7)
