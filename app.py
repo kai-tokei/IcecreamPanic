@@ -2,18 +2,18 @@
 import pyxel
 
 # object
-from scenes.game import Game
+from objects.manager import Manger
 
 class App:
     def __init__(self):
-        self.Game = Game()
+        self.manager = Manger()
         pyxel.init(108, 192, fps=60)
         pyxel.load("assets/icecream.pyxres")
         pyxel.mouse(visible=True)
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        self.Game.update()
+        self.manager.update()
 
     def draw(self):
-        self.Game.draw()
+        self.manager.draw()
