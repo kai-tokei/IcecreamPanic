@@ -10,8 +10,8 @@ class Title:
         pass
 
     def draw(self):
-        self.text += random.randint(1, 3)
-        self.image += random.randint(1, 3)
+        self.text += random.randint(1, 5)
+        self.image += random.randint(1, 5)
 
         pyxel.cls(1)
         if self.text < 149:
