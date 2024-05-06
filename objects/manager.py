@@ -1,10 +1,10 @@
 from consts.scene import Scene
-from objects.game import Game
+from scenes.game import Game
 
 class Manger:
     def __init__(self) -> None:
-        #self.scene = Scene.TITLE
-        self.scene = Scene.GAME
+        self.scene = Scene.TITLE
+        #self.scene = Scene.GAME
         self.game = Game()
 
     def update(self):

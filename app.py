@@ -2,7 +2,7 @@
 import pyxel
 
 # object
-from objects.game import Game
+from scenes.game import Game
 
 class App:
     def __init__(self):
