@@ -6,8 +6,11 @@ class Title:
         self.text: int = 0
         self.image: int = 0
 
-    def update(self):
-        pass
+    def update(self) -> bool:
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            return True
+        else:
+            return False
 
     def draw(self):
         self.text += random.randint(1, 5)

@@ -16,6 +16,7 @@ class Manger:
 
         # bgmの読み込み
         self.addSound("title", "title")
+        self.addSound("game", "game")
         self.isSetSound: bool = False
 
     def setScene(self, scene: Scene):
@@ -41,7 +42,8 @@ class Manger:
             self.game.update()
         elif self.scene == Scene.TITLE:
             self.playSound("title", True)
-            self.title.update()
+            if self.title.update():
+                self.scene = Scene.GAME
 
     def draw(self):
         if self.scene == Scene.GAME:
