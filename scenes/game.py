@@ -164,13 +164,14 @@ class Game:
                 return False
         return True
 
-    def update(self):
+    def update(self) -> bool:
         self.scoopIce()
         self.serve.update()
         self.serveProduct()
         self.pushCupOrCone()
         self.addSpoon()
         self.capitalSnack.update()
+        return False
 
     def draw(self):
         pyxel.cls(1)

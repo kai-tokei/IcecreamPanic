@@ -26,6 +26,10 @@ class Manger:
         with open(f"./assets/sounds/{path}.json", "rt") as fin:
             self.sounds[name] = json.loads(fin.read())
 
+    def stopSound(self):
+        self.isSetSound = False
+        pyxel.stop()
+
     def playSound(self, name: str, loop=False):
         if not self.isSetSound:
             if pyxel.play_pos(0) is None:
@@ -34,16 +38,20 @@ class Manger:
                     pyxel.play(ch, ch, loop=loop)
                 self.isSetSound = True
             else:
-                self.isSetSound = False
-                pyxel.stop()
+                self.stopSound()
 
     def update(self):
         if self.scene == Scene.GAME:
-            self.game.update()
+            if self.game.update():
+                self.stopSound()
+            else:
+                self.playSound("game", True)
         elif self.scene == Scene.TITLE:
-            self.playSound("title", True)
             if self.title.update():
                 self.scene = Scene.GAME
+                self.stopSound()
+            else:
+                self.playSound("title", True)
 
     def draw(self):
         if self.scene == Scene.GAME:
