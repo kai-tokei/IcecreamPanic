@@ -17,6 +17,7 @@ from components.capital_snack import CapitalSnack
 # consts
 from consts.icecreamstackitem import IceCreamStackItem
 
+# ゲームシーン
 class Game:
     def __init__(self) -> None:
         # ControllPalette
@@ -105,6 +106,7 @@ class Game:
                     # 先にアイスを乗せようとしているから、何かアクション
                     pass
 
+    # てっぺんのアイスの落下アニメーション用の座標をリセット
     def resetTopIcePos(self):
         self.topIcePos: list[float] = [47, 0]
         self.vy: float = 0
@@ -173,6 +175,16 @@ class Game:
                 return False
         return True
 
+    # 「タップでスタート」
+    def tapToStart(self):
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            self.isStarted = True
+
+    # 「タップでスタート」を描画
+    def drawTapToStart(self):
+        if pyxel.frame_count % 60 < 50:
+            pyxel.text(30, 140, "Tap To Start", 7)
+
     def update(self) -> bool:
         if self.isStarted:
             self.scoopIce()
@@ -183,6 +195,7 @@ class Game:
             self.capitalSnack.update()
             return False
         else:
+            self.tapToStart()
             return True
 
     def draw(self):
@@ -197,3 +210,4 @@ class Game:
         else:
             self.order.draw()
             self.drawControllPanel()
+            self.drawTapToStart()
