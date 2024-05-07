@@ -23,8 +23,8 @@ class Manager:
         self.scene = scene
 
     def addSound(self, name: str, path: str):
-        with open(f"./assets/sounds/{path}.json", "rt") as fin:
-        #with open(f"icecream/assets/sounds/{path}.json", "rt") as fin:
+        #with open(f"./assets/sounds/{path}.json", "rt") as fin:
+        with open(f"icecream/assets/sounds/{path}.json", "rt") as fin:
             self.sounds[name] = json.loads(fin.read())
 
     def stopSound(self):
