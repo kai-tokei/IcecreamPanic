@@ -5,7 +5,7 @@ from consts.scene import Scene
 from scenes.game import Game
 from scenes.title import Title
 
-class Manger:
+class Manager:
     def __init__(self) -> None:
         self.scene = Scene.TITLE
         self.sounds: dict = {}
@@ -24,6 +24,7 @@ class Manger:
 
     def addSound(self, name: str, path: str):
         with open(f"./assets/sounds/{path}.json", "rt") as fin:
+        #with open(f"icecream/assets/sounds/{path}.json", "rt") as fin:
             self.sounds[name] = json.loads(fin.read())
 
     def stopSound(self):
@@ -52,6 +53,7 @@ class Manger:
                 self.stopSound()
             else:
                 self.playSound("title", True)
+            self.playSound("title", True)
 
     def draw(self):
         if self.scene == Scene.GAME:
