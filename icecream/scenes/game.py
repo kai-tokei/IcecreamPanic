@@ -37,7 +37,7 @@ class Game:
         self.order = Order()
         self.serve = Serve(87, 128)
 
-        self.capital: int = 100  # 資金($)
+        self.capital: int = 0  # 資金($)
         self.capitalSnack: CapitalSnack = CapitalSnack(exist=False)
 
         self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
@@ -171,6 +171,22 @@ class Game:
     def drawCapital(self):
         pyxel.text(88, 4, f'${self.capital}', 7)
 
+    # タイムキーパー
+    def timeKeep(self, coef: float=30) -> bool:
+        REST_TIME_RATIO: float = 1 - (pyxel.frame_count - self.startTime) / self.LIMIT_TIME
+        return REST_TIME_RATIO < 1 / coef
+
+    # 残り時間を描画
+    def drawRestTime(self):
+        restCol: int = 7
+        REST_TIME_RATIO: float = 1 - (pyxel.frame_count - self.startTime) / self.LIMIT_TIME
+        # 割合に応じて、ゲージの色を変える
+        if REST_TIME_RATIO < 0.3:
+            restCol = 8
+        elif REST_TIME_RATIO < 0.5:
+            restCol = 10
+        pyxel.rect(5, 4, 30 * REST_TIME_RATIO, 8, restCol)
+
     # 完成品がオーダーと合っているか確認
     def checkProduct(self) -> bool:
         # 長さが異なっていたら、間違い
@@ -222,6 +238,7 @@ class Game:
             self.drawScoopedIce()
             self.capitalSnack.draw()
             self.drawCapital()
+            self.drawRestTime()
         elif self.gameState == GameState.TAP_TO_START:
             self.order.draw()
             self.drawControllPanel()
