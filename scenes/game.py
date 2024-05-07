@@ -37,6 +37,8 @@ class Game:
         self.G: float = 9.8 * 0.05
         self.vy: float = 0
 
+        self.isStarted: bool = False
+
         self.makeOrder()
 
     # クリックされたアイスをスタックに追加
@@ -78,7 +80,7 @@ class Game:
             crtItem = self.scoopStack[i]
             posX = x
             posY = y-i*10
-            # てっぺんだけ、落とすアニメーション
+            # てっぺんだけ落とすアニメーションをつける
             if i == len(self.scoopStack)-1:
                 posY = self.topIcePos[1]
                 if posY < y-i*10:
@@ -88,6 +90,9 @@ class Game:
                 else:
                     posY = y-i*10
             if crtItem.tag == "ice":
+                # アイスをちょっとずらす
+                if i != 1:
+                    posX += 1 if i%2 else -1
                 Ice(posX, posY, crtItem.iceIndex).draw()
             elif crtItem.tag == "spoon":
                 SpoonButton(posX, posY).draw()
@@ -145,6 +150,10 @@ class Game:
                 self.capital -= point
             self.scoopStack = []
 
+    # 現在資金を表示
+    def drawCapital(self):
+        pyxel.text(88, 4, f'${self.capital}', 7)
+
     # 完成品がオーダーと合っているか確認
     def checkProduct(self) -> bool:
         # 長さが異なっていたら、間違い
@@ -165,20 +174,26 @@ class Game:
         return True
 
     def update(self) -> bool:
-        self.scoopIce()
-        self.serve.update()
-        self.serveProduct()
-        self.pushCupOrCone()
-        self.addSpoon()
-        self.capitalSnack.update()
-        return False
+        if self.isStarted:
+            self.scoopIce()
+            self.serve.update()
+            self.serveProduct()
+            self.pushCupOrCone()
+            self.addSpoon()
+            self.capitalSnack.update()
+            return False
+        else:
+            return True
 
     def draw(self):
         pyxel.cls(1)
-        self.drawControllPanel()
-        self.serve.draw()
-        self.order.draw()
-        self.drawScoopedIce()
-        self.capitalSnack.draw()
-
-        pyxel.text(88, 4, f'${self.capital}', 7)
+        if self.isStarted:
+            self.drawControllPanel()
+            self.serve.draw()
+            self.order.draw()
+            self.drawScoopedIce()
+            self.capitalSnack.draw()
+            self.drawCapital()
+        else:
+            self.order.draw()
+            self.drawControllPanel()
