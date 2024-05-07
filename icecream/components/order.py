@@ -11,10 +11,10 @@ from components.speech_bubble import SpeechBubble
 from consts.icecreamstackitem import IceCreamStackItem
 
 class Order(GameObject):
-    def __init__(self, x: float=4, y: float=110):
+    def __init__(self, x: float=4, y: float=125):
         super().__init__(x, y)
         self.orderStack: list[IceCreamStackItem] = []
-        self.speechBubble = SpeechBubble()
+        self.speechBubble = SpeechBubble(y=18)
 
     def push(self, item: IceCreamStackItem):
         self.orderStack.append(item)
