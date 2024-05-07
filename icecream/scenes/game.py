@@ -1,6 +1,6 @@
 import pyxel
 import random
-import copy
+from enum import Enum, auto
 
 # Components
 from components.button.cone_button import ConeButton
@@ -16,6 +16,13 @@ from components.capital_snack import CapitalSnack
 
 # consts
 from consts.icecreamstackitem import IceCreamStackItem
+
+# ゲームの状態遷移
+class GameState(Enum):
+    TAP_TO_START = auto()
+    GAME = auto()
+    FINISHED = auto()
+    TRANS_TO_SCORE = auto()
 
 # ゲームシーン
 class Game:
@@ -38,7 +45,9 @@ class Game:
         self.G: float = 9.8 * 0.05
         self.vy: float = 0
 
-        self.isStarted: bool = False
+        self.gameState: GameState = GameState.TAP_TO_START
+        self.startTime: int = 0
+        self.LIMIT_TIME: int = 60 * 60
 
         self.makeOrder()
 
@@ -62,6 +71,12 @@ class Game:
             iceButtons_list.append(IceButton(
                 x=31+(i//4*16)+(i%4)*16, y=156+i//4*16, kind=i))
         return iceButtons_list
+
+    def startCount(self):
+        self.startTime = pyxel.frame_count
+
+    def isLimitTime(self):
+        self.gameState = GameState.FINISHED
 
     # 注文を生成
     def makeOrder(self):
@@ -178,7 +193,7 @@ class Game:
     # 「タップでスタート」
     def tapToStart(self):
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
-            self.isStarted = True
+            self.gameState = GameState.GAME
 
     # 「タップでスタート」を描画
     def drawTapToStart(self):
@@ -186,7 +201,7 @@ class Game:
             pyxel.text(30, 140, "Tap To Start", 7)
 
     def update(self) -> bool:
-        if self.isStarted:
+        if self.gameState == GameState.GAME:
             self.scoopIce()
             self.serve.update()
             self.serveProduct()
@@ -194,20 +209,20 @@ class Game:
             self.addSpoon()
             self.capitalSnack.update()
             return False
-        else:
+        elif self.gameState == GameState.TAP_TO_START:
             self.tapToStart()
             return True
 
     def draw(self):
         pyxel.cls(1)
-        if self.isStarted:
+        if self.gameState == GameState.GAME:
             self.drawControllPanel()
             self.serve.draw()
             self.order.draw()
             self.drawScoopedIce()
             self.capitalSnack.draw()
             self.drawCapital()
-        else:
+        elif self.gameState == GameState.TAP_TO_START:
             self.order.draw()
             self.drawControllPanel()
             self.drawTapToStart()
