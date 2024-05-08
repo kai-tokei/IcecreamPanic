@@ -72,11 +72,18 @@ class Game:
                 x=31+(i//4*16)+(i%4)*16, y=156+i//4*16, kind=i))
         return iceButtons_list
 
+    # カウントアップをスタート
     def startCount(self):
         self.startTime = pyxel.frame_count
 
-    def isLimitTime(self):
-        self.gameState = GameState.FINISHED
+    # 制限時間が訪れたか
+    def isTimeLimit(self) -> bool:
+        return self.LIMIT_TIME - (pyxel.frame_count - self.LIMIT_TIME) < 0
+
+    # 条件に沿ったら、ゲームを終了させる
+    def finishGame(self):
+        if self.isTimeLimit():
+            self.gameState = GameState.FINISHED
 
     # 注文を生成
     def makeOrder(self):
@@ -171,11 +178,6 @@ class Game:
     def drawCapital(self):
         pyxel.text(88, 4, f'${self.capital}', 7)
 
-    # タイムキーパー
-    def timeKeep(self, coef: float=30) -> bool:
-        REST_TIME_RATIO: float = 1 - (pyxel.frame_count - self.startTime) / self.LIMIT_TIME
-        return REST_TIME_RATIO < 1 / coef
-
     # 残り時間を描画
     def drawRestTime(self):
         restCol: int = 7
@@ -224,6 +226,7 @@ class Game:
             self.pushCupOrCone()
             self.addSpoon()
             self.capitalSnack.update()
+            self.finishGame()
             return False
         elif self.gameState == GameState.TAP_TO_START:
             self.tapToStart()
