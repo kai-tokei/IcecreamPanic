@@ -78,7 +78,7 @@ class Game:
 
     # 制限時間が訪れたか
     def isTimeLimit(self) -> bool:
-        return self.LIMIT_TIME - (pyxel.frame_count - self.LIMIT_TIME) < 0
+        return self.LIMIT_TIME - (pyxel.frame_count - self.startTime) < 0
 
     # 条件に沿ったら、ゲームを終了させる
     def finishGame(self):
@@ -218,6 +218,10 @@ class Game:
         if pyxel.frame_count % 60 < 50:
             pyxel.text(30, 140, "Tap To Start", 7)
 
+    # 終了を描画
+    def drawFinished(self):
+        pyxel.blt(18, 38, 2, 0, 8, 87, 63, colkey=0)
+
     def update(self) -> bool:
         if self.gameState == GameState.GAME:
             self.scoopIce()
@@ -230,6 +234,8 @@ class Game:
             return False
         elif self.gameState == GameState.TAP_TO_START:
             self.tapToStart()
+            return True
+        elif self.gameState == GameState.FINISHED:
             return True
 
     def draw(self):
@@ -246,3 +252,8 @@ class Game:
             self.order.draw()
             self.drawControllPanel()
             self.drawTapToStart()
+        elif self.gameState == GameState.FINISHED:
+            self.order.draw()
+            self.drawControllPanel()
+            self.drawTapToStart()
+            self.drawFinished()
