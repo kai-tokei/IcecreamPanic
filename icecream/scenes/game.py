@@ -47,7 +47,10 @@ class Game:
 
         self.gameState: GameState = GameState.TAP_TO_START
         self.startTime: int = 0
-        self.LIMIT_TIME: int = 60 * 60
+        self.LIMIT_TIME: int = 60 * 5
+
+        self.finished: bool = False
+
 
         self.makeOrder()
 
@@ -83,7 +86,7 @@ class Game:
     # 条件に沿ったら、ゲームを終了させる
     def finishGame(self):
         if self.isTimeLimit():
-            self.gameState = GameState.FINISHED
+            self.gameState = GameState.TRANS_TO_SCORE
 
     # 注文を生成
     def makeOrder(self):
@@ -122,8 +125,8 @@ class Game:
                 pass
             else:
                 if i == 0:
-                    if crtItem.tag == "cup": Cup().draw()
-                    elif crtItem.tag == "cone": Cone().draw()
+                    if crtItem.tag == "cup": Cup(y=102).draw()
+                    elif crtItem.tag == "cone": Cone(y=102).draw()
                 else:
                     # 先にアイスを乗せようとしているから、何かアクション
                     pass
@@ -213,6 +216,10 @@ class Game:
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             self.gameState = GameState.GAME
 
+    def tapToEnd(self):
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            self.gameState = GameState.FINISHED
+
     # 「タップでスタート」を描画
     def drawTapToStart(self):
         if pyxel.frame_count % 60 < 50:
@@ -220,7 +227,9 @@ class Game:
 
     # 終了を描画
     def drawFinished(self):
-        pyxel.blt(18, 38, 2, 0, 8, 87, 63, colkey=0)
+        pyxel.blt(16, 38, 2, 0, 8, 87, 63, colkey=0)
+        if pyxel.frame_count % 60 < 50:
+            pyxel.text(35, 140, "Tap To End", 7)
 
     def update(self) -> bool:
         if self.gameState == GameState.GAME:
@@ -235,7 +244,10 @@ class Game:
         elif self.gameState == GameState.TAP_TO_START:
             self.tapToStart()
             return True
+        elif self.gameState == GameState.TRANS_TO_SCORE:
+            return False
         elif self.gameState == GameState.FINISHED:
+            self.finished = True
             return True
 
     def draw(self):
@@ -252,8 +264,9 @@ class Game:
             self.order.draw()
             self.drawControllPanel()
             self.drawTapToStart()
-        elif self.gameState == GameState.FINISHED:
+        elif self.gameState == GameState.TRANS_TO_SCORE:
             self.order.draw()
             self.drawControllPanel()
-            self.drawTapToStart()
             self.drawFinished()
+            self.tapToEnd()
+
