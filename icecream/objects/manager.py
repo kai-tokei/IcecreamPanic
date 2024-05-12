@@ -49,8 +49,9 @@ class Manager:
         if self.scene == Scene.GAME:
             if self.game.update():
                 self.stopSound()
-                # self.capital = self.game.capital
-                # self.scene = Scene.SCORE
+                if self.game.finished:
+                    self.capital = self.game.capital
+                    self.scene = Scene.SCORE
             else:
                 self.playSound("game", True)
         elif self.scene == Scene.TITLE:
@@ -61,7 +62,8 @@ class Manager:
                 self.playSound("title", True)
             self.playSound("title", True)
         elif self.scene == Scene.SCORE:
-            self.playSound("title", True)
+            if self.score.update(self.capital):
+                self.playSound("title", True)
 
     def draw(self):
         if self.scene == Scene.GAME:
