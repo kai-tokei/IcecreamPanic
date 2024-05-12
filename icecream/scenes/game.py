@@ -1,6 +1,6 @@
 import pyxel
 import random
-import copy
+from enum import Enum, auto
 
 # Components
 from components.button.cone_button import ConeButton
@@ -17,6 +17,13 @@ from components.capital_snack import CapitalSnack
 # consts
 from consts.icecreamstackitem import IceCreamStackItem
 
+# ゲームの状態遷移
+class GameState(Enum):
+    TAP_TO_START = auto()
+    GAME = auto()
+    FINISHED = auto()
+    TRANS_TO_SCORE = auto()
+
 # ゲームシーン
 class Game:
     def __init__(self) -> None:
@@ -30,7 +37,7 @@ class Game:
         self.order = Order()
         self.serve = Serve(87, 128)
 
-        self.capital: int = 100  # 資金($)
+        self.capital: int = 0  # 資金($)
         self.capitalSnack: CapitalSnack = CapitalSnack(exist=False)
 
         self.scoopStack: list[IceCreamStackItem] = []  # 今作っているアイスクリームのスタック
@@ -38,7 +45,12 @@ class Game:
         self.G: float = 9.8 * 0.05
         self.vy: float = 0
 
-        self.isStarted: bool = False
+        self.gameState: GameState = GameState.TAP_TO_START
+        self.startTime: int = 0
+        self.LIMIT_TIME: int = 60 * 60
+
+        self.finished: bool = False
+
 
         self.makeOrder()
 
@@ -62,6 +74,19 @@ class Game:
             iceButtons_list.append(IceButton(
                 x=31+(i//4*16)+(i%4)*16, y=156+i//4*16, kind=i))
         return iceButtons_list
+
+    # カウントアップをスタート
+    def startCount(self):
+        self.startTime = pyxel.frame_count
+
+    # 制限時間が訪れたか
+    def isTimeLimit(self) -> bool:
+        return self.LIMIT_TIME - (pyxel.frame_count - self.startTime) < 0
+
+    # 条件に沿ったら、ゲームを終了させる
+    def finishGame(self):
+        if self.isTimeLimit():
+            self.gameState = GameState.TRANS_TO_SCORE
 
     # 注文を生成
     def makeOrder(self):
@@ -100,8 +125,8 @@ class Game:
                 pass
             else:
                 if i == 0:
-                    if crtItem.tag == "cup": Cup().draw()
-                    elif crtItem.tag == "cone": Cone().draw()
+                    if crtItem.tag == "cup": Cup(y=102).draw()
+                    elif crtItem.tag == "cone": Cone(y=102).draw()
                 else:
                     # 先にアイスを乗せようとしているから、何かアクション
                     pass
@@ -156,6 +181,17 @@ class Game:
     def drawCapital(self):
         pyxel.text(88, 4, f'${self.capital}', 7)
 
+    # 残り時間を描画
+    def drawRestTime(self):
+        restCol: int = 7
+        REST_TIME_RATIO: float = 1 - (pyxel.frame_count - self.startTime) / self.LIMIT_TIME
+        # 割合に応じて、ゲージの色を変える
+        if REST_TIME_RATIO < 0.3:
+            restCol = 8
+        elif REST_TIME_RATIO < 0.5:
+            restCol = 10
+        pyxel.rect(5, 4, 30 * REST_TIME_RATIO, 8, restCol)
+
     # 完成品がオーダーと合っているか確認
     def checkProduct(self) -> bool:
         # 長さが異なっていたら、間違い
@@ -178,36 +214,59 @@ class Game:
     # 「タップでスタート」
     def tapToStart(self):
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
-            self.isStarted = True
+            self.gameState = GameState.GAME
+
+    def tapToEnd(self):
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            self.gameState = GameState.FINISHED
 
     # 「タップでスタート」を描画
     def drawTapToStart(self):
         if pyxel.frame_count % 60 < 50:
             pyxel.text(30, 140, "Tap To Start", 7)
 
+    # 終了を描画
+    def drawFinished(self):
+        pyxel.blt(16, 38, 2, 0, 8, 87, 63, colkey=0)
+        if pyxel.frame_count % 60 < 50:
+            pyxel.text(35, 140, "Tap To End", 7)
+
     def update(self) -> bool:
-        if self.isStarted:
+        if self.gameState == GameState.GAME:
             self.scoopIce()
             self.serve.update()
             self.serveProduct()
             self.pushCupOrCone()
             self.addSpoon()
             self.capitalSnack.update()
+            self.finishGame()
             return False
-        else:
+        elif self.gameState == GameState.TAP_TO_START:
             self.tapToStart()
+            return True
+        elif self.gameState == GameState.TRANS_TO_SCORE:
+            return False
+        elif self.gameState == GameState.FINISHED:
+            self.finished = True
             return True
 
     def draw(self):
         pyxel.cls(1)
-        if self.isStarted:
+        if self.gameState == GameState.GAME:
             self.drawControllPanel()
             self.serve.draw()
             self.order.draw()
             self.drawScoopedIce()
             self.capitalSnack.draw()
             self.drawCapital()
-        else:
+            self.drawRestTime()
+        elif self.gameState == GameState.TAP_TO_START:
             self.order.draw()
             self.drawControllPanel()
             self.drawTapToStart()
+        elif self.gameState == GameState.TRANS_TO_SCORE:
+            self.order.draw()
+            self.drawControllPanel()
+            self.drawFinished()
+            self.tapToEnd()
+
