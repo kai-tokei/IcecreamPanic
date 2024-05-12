@@ -2,11 +2,13 @@ import pyxel
 import random
 from enum import Enum, auto
 
-# Components
+# Button
 from components.button.cone_button import ConeButton
 from components.button.cup_button import CupButton
 from components.button.ice_button import IceButton
 from components.button.spoon_button import SpoonButton
+
+# components
 from components.cone import Cone
 from components.cup import Cup
 from components.serve import Serve
