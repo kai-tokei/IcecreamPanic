@@ -44,15 +44,13 @@ class Game:
         self.topIcePos: list[float] = [47, 0]
         self.G: float = 9.8 * 0.05
         self.vy: float = 0
+        self.makeOrder()
 
         self.gameState: GameState = GameState.TAP_TO_START
         self.startTime: int = 0
         self.LIMIT_TIME: int = 60 * 60
 
         self.finished: bool = False
-
-
-        self.makeOrder()
 
     # クリックされたアイスをスタックに追加
     def scoopIce(self):
@@ -122,14 +120,10 @@ class Game:
                 Ice(posX, posY, crtItem.iceIndex).draw()
             elif crtItem.tag == "spoon":
                 SpoonButton(posX, posY).draw()
-                pass
             else:
                 if i == 0:
                     if crtItem.tag == "cup": Cup(y=102).draw()
                     elif crtItem.tag == "cone": Cone(y=102).draw()
-                else:
-                    # 先にアイスを乗せようとしているから、何かアクション
-                    pass
 
     # てっぺんのアイスの落下アニメーション用の座標をリセット
     def resetTopIcePos(self):
@@ -162,19 +156,26 @@ class Game:
         self.spoonButton.draw()
         self.drawIcecreamButtons()
 
+    # 売り上げを加算
+    def increaseCapital(self):
+        point = 10 + len(self.scoopStack)
+        self.capitalSnack = CapitalSnack(point=point, corrected=True, exist=True)
+        self.capital += point
+        self.makeOrder()
+
+    # 売り上げを減算
+    def decreaseCapital(self):
+        point = (10 + len(self.scoopStack)) // 2
+        self.capitalSnack = CapitalSnack(point=point, corrected=False, exist=True)
+        self.capital -= point
+
     # アイスクリームを給仕
     def serveProduct(self):
         if self.serve.isClicked():
-            point = 0
             if self.checkProduct():
-                point = 10 + len(self.scoopStack)
-                self.capitalSnack = CapitalSnack(point=point, corrected=True, exist=True)
-                self.capital += point
-                self.makeOrder()
+                self.increaseCapital()
             else:
-                point = (10 + len(self.scoopStack)) // 2
-                self.capitalSnack = CapitalSnack(point=point, corrected=False, exist=True)
-                self.capital -= point
+                self.decreaseCapital()
             self.scoopStack = []
 
     # 現在資金を表示
