@@ -38,5 +38,5 @@ jobs:
     - name: Upload artifact for deployment
       uses: actions/upload-artifact@v4
       with:
-        name: place-app
+        name: icecream_panic
         path: icecream.pyxapp  # ビルドされたアプリのパスを指定
