@@ -35,3 +35,10 @@ jobs:
     - name: Make pyxapp
       run: |
         pyxel package icecream icecream/__main__.py
+        
+    - name : Upload artifact for deployment jobs
+      uses : actions/upload-artifact@v4.0.0
+      with:
+        name: place app
+        path: output/icecream.pyxapp
+        
