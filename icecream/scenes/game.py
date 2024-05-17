@@ -50,7 +50,7 @@ class Game:
 
         self.gameState: GameState = GameState.TAP_TO_START
         self.startTime: int = 0
-        self.LIMIT_TIME: int = 60 * 7
+        self.LIMIT_TIME: int = 60 * 60
 
         self.finished: bool = False
 
