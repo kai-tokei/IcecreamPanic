@@ -143,8 +143,9 @@ class Game:
     # カップまたはコーンが押されたら、スタック
     def pushCupOrCone(self):
         # カップとコーンの追加
-        if self.coneButton.isClicked(): self.pushCone()
-        if self.cupButton.isClicked(): self.pushCup()
+        if len(self.scoopStack) == 0:
+            if self.coneButton.isClicked(): self.pushCone()
+            if self.cupButton.isClicked(): self.pushCup()
 
     # アイスクリームのボタンを描画
     def drawIcecreamButtons(self):
