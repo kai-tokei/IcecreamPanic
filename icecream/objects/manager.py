@@ -27,8 +27,8 @@ class Manager:
         self.scene = scene
 
     def addSound(self, name: str, path: str):
-        #with open(f"./assets/sounds/{path}.json", "rt") as fin:
-        with open(f"icecream/assets/sounds/{path}.json", "rt") as fin:
+        with open(f"./assets/sounds/{path}.json", "rt") as fin:
+        #with open(f"icecream/assets/sounds/{path}.json", "rt") as fin:
             self.sounds[name] = json.loads(fin.read())
 
     def stopSound(self):
@@ -64,6 +64,10 @@ class Manager:
         elif self.scene == Scene.SCORE:
             if self.score.update(self.capital):
                 self.playSound("title", True)
+            else:
+                self.game = Game()
+                self.score = Score()
+                self.scene = Scene.GAME
 
     def draw(self):
         if self.scene == Scene.GAME:
