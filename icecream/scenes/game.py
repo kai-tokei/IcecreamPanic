@@ -245,6 +245,8 @@ class Game:
             self.addSpoon()
             self.capitalSnack.update()
             self.finishGame()
+            if pyxel.btnp(key=pyxel.KEY_0):
+                self.LIMIT_TIME = 1
             return False
         elif self.gameState == GameState.TAP_TO_START:
             self.tapToStart()
